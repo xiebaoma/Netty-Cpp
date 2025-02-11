@@ -22,9 +22,6 @@
     <Filter Include="FakeData">
       <UniqueIdentifier>{5857eb0c-c7d4-458d-a39b-9c8beb27b29f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{2f347aab-6a7a-4218-b0ed-b2c155e940d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Update">
       <UniqueIdentifier>{1586951a-712b-4a4a-a721-6e621f9d3d37}</UniqueIdentifier>
     </Filter>
@@ -45,6 +42,9 @@
     </Filter>
     <Filter Include="jsoncpp-1.9.0">
       <UniqueIdentifier>{792883a9-fa67-41ef-94a4-302aba71f1ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Update\UI">
+      <UniqueIdentifier>{2f347aab-6a7a-4218-b0ed-b2c155e940d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,112 +136,112 @@
       <Filter>SkinLib</Filter>
     </ClCompile>
     <ClCompile Include="AboutDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="AddFriendConfirmDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="BuddyChatDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="BuddyInfoDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="BuddyListCtrl.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="ChangePicHeadDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="ChatDlgCommon.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="ChatTabMgr.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="ClosePromptDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="CreateNewGroupDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="FaceCtrl.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="FaceSelDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="FileTransferCtrl.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="FindFriendDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="FontSelDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="GroupChatDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="GroupInfoDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="LoginDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="LoginSettingsDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="LogonUserInfoDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="MainDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="MobileStatusDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="ModifyMarkNameDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="ModifyPasswordDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="MsgTipDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="MultiChatDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="MultiChatMemberSelectionDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="PicBarDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="RecentListCtrl.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="RegisterDialog.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="SessChatDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="SplitterCtrl.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="SystemSettingDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="TeamDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="UpdateDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="UserSnapInfoDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="Updater.cpp">
       <Filter>Update</Filter>
@@ -286,7 +286,7 @@
       <Filter>SkinLib</Filter>
     </ClCompile>
     <ClCompile Include="RemoteDesktopDlg.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="CriticalSection.cpp">
       <Filter>Utils</Filter>
@@ -328,7 +328,7 @@
       <Filter>Tasks</Filter>
     </ClCompile>
     <ClCompile Include="BuddyInfoFloatWnd.cpp">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClCompile>
     <ClCompile Include="PerformanceCounter.cpp">
       <Filter>Utils</Filter>
@@ -468,112 +468,112 @@
       <Filter>FakeData</Filter>
     </ClInclude>
     <ClInclude Include="AboutDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="AddFriendConfirmDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="BuddyChatDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="BuddyInfoDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="BuddyListCtrl.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="ChangePicHeadDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="ChatDlgCommon.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="ChatTabMgr.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="ClosePromptDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="CreateNewGroupDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="FaceCtrl.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="FaceSelDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="FileTransferCtrl.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="FindFriendDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="FontSelDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="GroupChatDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="GroupInfoDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="LoginDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="LoginSettingsDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="LogonUserInfoDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="MainDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="MobileStatusDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="ModifyMarkNameDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="ModifyPasswordDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="MsgTipDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="MultiChatDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="MultiChatMemberSelectionDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="PicBarDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="RecentListCtrl.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="RegisterDialog.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="SessChatDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="SplitterCtrl.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="SystemSettingDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="TeamDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="UpdateDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="UserSnapInfoDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="Updater.h">
       <Filter>Update</Filter>
@@ -624,7 +624,7 @@
       <Filter>SkinLib</Filter>
     </ClInclude>
     <ClInclude Include="RemoteDesktopDlg.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="CriticalSection.h">
       <Filter>Utils</Filter>
@@ -714,10 +714,10 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="BuddyInfoFloatWnd.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="UIText.h">
-      <Filter>UI</Filter>
+      <Filter>Update\UI</Filter>
     </ClInclude>
     <ClInclude Include="TrayIcon.h">
       <Filter>Tasks</Filter>
