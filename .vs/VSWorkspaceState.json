@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\MingXServer"
+    "\\MingXServer",
+    "\\MingXServer\\fileserver"
   ],
-  "SelectedNode": "\\MingXServer\\MingXServer.sln",
+  "SelectedNode": "\\MingXServer\\fileserver\\main.cpp",
   "PreviewInSolutionExplorer": false
 }
