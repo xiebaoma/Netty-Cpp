@@ -54,7 +54,7 @@ void testStaticNow()
     Timestamp now = Timestamp::now();
     std::cout << "now: " << now.toString() << std::endl;
 
-    sleep_ms(100); // 改为平台兼容的 sleep
+    sleep_ms(100);
 
     Timestamp later = Timestamp::now();
     std::cout << "later: " << later.toString() << std::endl;
