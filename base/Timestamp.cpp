@@ -1,8 +1,9 @@
 /*
- *  Filename:   Timestamp.cpp
+ *  Filename:   Timestamp.h
  *  Author:     xiebaoma
  *  Date:       2025-06-15
- *  Description:implement of Timestamp class
+ *              2025-06-16
+ *  Description:Encapsulates a timestamp
  */
 
 #include <chrono>
