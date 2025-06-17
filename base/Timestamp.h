@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <string>
+#include <cstdint>
 
 static const int MicroSecondsPerSecond = 1000 * 1000;
 

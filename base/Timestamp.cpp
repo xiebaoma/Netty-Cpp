@@ -69,7 +69,7 @@ std::string Timestamp::toFormattedString(bool showMicroseconds) const
     time_t seconds = static_cast<time_t>(microSecondsSinceEpoch_ / MicroSecondsPerSecond);
     struct tm tm_time;
 
-#if defined WIN32
+#if defined _WIN32
     localtime_s(&tm_time, &seconds);
 #else
     struct tm *ptm;

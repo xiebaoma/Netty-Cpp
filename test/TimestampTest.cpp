@@ -2,7 +2,9 @@
  *  Filename:   TimestampTest.h
  *  Author:     xiebaoma
  *  Date:       2025-06-15
+ *              2025-06-17
  *  Description:test timestamp
+ *  command:    g++ TimestampTest.cpp ../base/Timestamp.cpp -o test
  */
 
 #include <iostream>

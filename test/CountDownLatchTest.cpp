@@ -2,8 +2,9 @@
  *  Filename:   CountDownLatchTest.cpp
  *  Author:     xiebaoma
  *  Date:       2025-06-16
+ *              2025-06-17
  *  Description:test countdown and thread
- *  test:       g++ -std=c++11 -pthread CountDownLatchTest.cpp ../base/CountDownLatch.cpp -o test.exe
+ *  test:       g++ CountDownLatchTest.cpp ../base/CountDownLatch.cpp -o test.exe
  */
 
 #include <iostream>

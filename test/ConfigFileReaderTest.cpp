@@ -2,7 +2,9 @@
  *  Filename:   ConfigFileReaderTest.cpp
  *  Author:     xiebaoma
  *  Date:       2025-06-16
+ *              2025-06-17
  *  Description:测试一个读取配置文件类
+ *  command:    g++ ConfigFileReaderTest.cpp ../base/ConfigFileReader.cpp -o test
  */
 
 #include <iostream>

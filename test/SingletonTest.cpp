@@ -1,8 +1,10 @@
 /*
  *  Filename:   SingletonTest.cpp
  *  Author:     xiebaoma
- *  Date:       2025-06-15
+ *  Date:       2025-06-16
+ *              2025-06-17
  *  Description:test singleton mode
+ *  command:    g++ SingletonTest.cpp -o test
  */
 
 #include <iostream>
