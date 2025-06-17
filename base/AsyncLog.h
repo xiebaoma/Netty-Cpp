@@ -14,7 +14,7 @@
 #include <mutex>
 #include <condition_variable>
 
-//如果想将这个异步日志类导出成一个动态库，你需要做以下宏定义
+// 如果想将这个异步日志类导出成一个动态库，你需要做以下宏定义
 /*
 #ifdef _WIN32
   #ifdef BUILD_LOG_DLL
@@ -26,20 +26,20 @@
   #define LOGAPI   // Linux 下通常不需要显式导出
 #endif
 */
-//然后定义类：
+// 然后定义类：
 /*
 
 */
 enum LOG_LEVEL
 {
-    LOG_LEVEL_TRACE,
-    LOG_LEVEL_DEBUG,
-    LOG_LEVEL_INFO,
-    LOG_LEVEL_WARNING,
-    LOG_LEVEL_ERROR,
-    LOG_LEVEL_SYSERROR,
-    LOG_LEVEL_FATAL,
-    LOG_LEVEL_CRITICAL,
+  LOG_LEVEL_TRACE,
+  LOG_LEVEL_DEBUG,
+  LOG_LEVEL_INFO,
+  LOG_LEVEL_WARNING,
+  LOG_LEVEL_ERROR,
+  LOG_LEVEL_SYSERROR,
+  LOG_LEVEL_FATAL,
+  LOG_LEVEL_CRITICAL,
 };
 
 #define LOGT(...) CAsyncLog::output(LOG_LEVEL_TRACE, _FILE_, _LINE_, _VA_ARGS_);
@@ -53,3 +53,6 @@ enum LOG_LEVEL
 
 #define LOG_DEBUG_BIN(buf, buflength) CAsyncLog::outputBinary(buf, buflength);
 
+class CAsyncLog
+{
+};
