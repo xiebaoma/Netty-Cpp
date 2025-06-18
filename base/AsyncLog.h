@@ -80,13 +80,14 @@ private:
   static bool createNewFile(const char *pszLogFileName);
   static bool writeToFile(const std::string &data);
   static void crash();
-  static const char *ullto4Str(int n);
+  static std::string ullto4Str(int n);
   static char *formLog(int &index, char *szbuf, size_t size_buf, unsigned char *buffer, size_t size);
   static void writeThreadProc();
+  static void GetPIDString(char *szPID, size_t size);
 
 private:
   static bool m_bToTile;                               // 日志写入文件还是控制台
-  static FILE *m_hLohFile;                             // 文件句柄
+  static FILE *m_hLogFile;                             // 文件句柄
   static std::string m_strFileName;                    // 文件名
   static std::string m_strFileNamePID;                 // 文件名中的进程ID
   static bool m_bTruncateLongLog;                      // 长日志是否截断
