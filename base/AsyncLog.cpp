@@ -96,6 +96,11 @@ bool CAsyncLog::isRunning()
 
 bool CAsyncLog::output(long nLevel, const char *pszFmt, ...)
 {
+    return output(nLevel, nullptr, 0, pszFmt);
+}
+
+bool CAsyncLog::output(long nLevel, const char *pszFileName, int nLineNo, const char *pszFmt, ...)
+{
     if (nLevel != LOG_LEVEL_CRITICAL)
     {
         if (nLevel < m_nCurrentLeval)
@@ -106,6 +111,111 @@ bool CAsyncLog::output(long nLevel, const char *pszFmt, ...)
 
     std::string strLine;
     makeLinePrefix(nLevel, strLine);
+
+    // 如果有文件名和行号，则追加
+    if (pszFileName != nullptr)
+    {
+        char szFileName[512] = {0};
+        snprintf(szFileName, sizeof(szFileName), " [%s:%d]", pszFileName, nLineNo);
+        strLine += szFileName;
+    }
+
+    // log正文
+    std::string strLogMsg;
+
+    // 计算一下不定参数的长度
+    va_list ap;
+    va_start(ap, pszFmt);
+    int nLogMsgLength = vsnprintf(NULL, 0, pszFmt, ap);
+    va_end(ap);
+
+    // 容量必须算上最后一个0
+    if ((int)strLogMsg.capacity() < nLogMsgLength + 1)
+    {
+        strLogMsg.resize(nLogMsgLength + 1);
+    }
+    va_list aq;
+    va_start(aq, pszFmt);
+    vsnprintf((char *)strLogMsg.data(), strLogMsg.capacity(), pszFmt, aq);
+    va_end(aq);
+
+    // string内容正确但length不对，恢复一下length
+    std::string strMsgFormal;
+    strMsgFormal.append(strLogMsg.c_str(), nLogMsgLength);
+
+    // 如果日志开启截断，长日志只取前MAX_LINE_LENGTH个字符
+    if (m_bTruncateLongLog)
+    {
+        strMsgFormal = strMsgFormal.substr(0, MAX_LINE_LENGTH);
+    }
+
+    strLine += strMsgFormal;
+
+    // 如果不输出到控制台，就在每一行末尾加一个'\n'
+    if (!m_strFileName.empty())
+    {
+        strLine += '\n';
+    }
+    // 到此，日志内容已准备好
+
+    // 如果日志级别不是FATAL，就添加到缓冲区，否之就直接crash
+    if (nLevel != LOG_LEVEL_FATAL)
+    {
+        std::lock_guard<std::mutex> lock_guard(m_mutexWrite);
+        m_listLinesToWrite.push_back(strLine);
+        m_cvWrite.notify_one();
+    }
+    else
+    {
+        // FATAL级别的日志需要立刻crash程序，所以采取同步写日志
+        std::cout << strLine << std::endl;
+#ifdef _WIN32
+        // 向调试器输出调试信息
+        OutputDebugStringA(strLine.c_str());
+        OutputDebugStringA("\n");
+#endif
+
+        if (!m_strFileName.empty())
+        {
+            if (m_hLogFile == nullptr)
+            {
+                // 获取时间
+                char szNow[64];
+                time_t now = time(NULL);
+                tm time;
+#ifdef _WIN32
+                localtime_s(&time, &now);
+#else
+                localtime_r(&now, &time);
+#endif
+                strftime(szNow, sizeof(szNow), "%Y%m%d%H%M%S", &time);
+
+                // 准备文件名
+                std::string strNewFileName(m_strFileName);
+                strNewFileName += ".";
+                strNewFileName += szNow;
+                strNewFileName += ".";
+                strNewFileName += m_strFileNamePID;
+                strNewFileName += ".log";
+
+                // 新建文件,之后文件句柄已经指向新的文件
+                if (!createNewFile(strNewFileName.c_str()))
+                {
+                    return false;
+                }
+            }
+            // 将日志内容写入新文件
+            writeToFile(strLine);
+        }
+        // 让程序主动crash
+        crash();
+    }
+    return true;
+}
+
+bool CAsyncLog::outputBinary(unsigned char *buffer, size_t size)
+{
+    return false;
 }
 
 void CAsyncLog::makeLinePrefix(long nLevel, std::string &strPrefix)
