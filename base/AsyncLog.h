@@ -14,6 +14,7 @@
 #include <memory>
 #include <mutex>
 #include <condition_variable>
+#include <thread>
 
 // 如果想将这个异步日志类导出成一个动态库，你需要做以下宏定义
 /*
@@ -43,22 +44,22 @@ enum LOG_LEVEL
   LOG_LEVEL_CRITICAL,
 };
 
-#define LOGT(...) CAsyncLog::output(LOG_LEVEL_TRACE, _FILE_, _LINE_, _VA_ARGS_);
-#define LOGT(...) CAsyncLog::output(LOG_LEVEL_DEBUG, _FILE_, _LINE_, _VA_ARGS_);
-#define LOGT(...) CAsyncLog::output(LOG_LEVEL_INFO, _FILE_, _LINE_, _VA_ARGS_);
-#define LOGT(...) CAsyncLog::output(LOG_LEVEL_WARNING, _FILE_, _LINE_, _VA_ARGS_);
-#define LOGT(...) CAsyncLog::output(LOG_LEVEL_ERROR, _FILE_, _LINE_, _VA_ARGS_);
-#define LOGT(...) CAsyncLog::output(LOG_LEVEL_SYSERROR, _FILE_, _LINE_, _VA_ARGS_);
-#define LOGT(...) CAsyncLog::output(LOG_LEVEL_FATAL, _FILE_, _LINE_, _VA_ARGS_);
-#define LOGT(...) CAsyncLog::output(LOG_LEVEL_CRITICAL, _FILE_, _LINE_, _VA_ARGS_);
+#define LOG_TRACE(...) CAsyncLog::output(LOG_LEVEL_TRACE, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_DEBUG(...) CAsyncLog::output(LOG_LEVEL_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_INFO(...) CAsyncLog::output(LOG_LEVEL_INFO, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_WARN(...) CAsyncLog::output(LOG_LEVEL_WARNING, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_ERROR(...) CAsyncLog::output(LOG_LEVEL_ERROR, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_SYSERROR(...) CAsyncLog::output(LOG_LEVEL_SYSERROR, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_FATAL(...) CAsyncLog::output(LOG_LEVEL_FATAL, __FILE__, __LINE__, __VA_ARGS__)
+#define LOG_CRITICAL(...) CAsyncLog::output(LOG_LEVEL_CRITICAL, __FILE__, __LINE__, __VA_ARGS__)
 
-#define LOG_DEBUG_BIN(buf, buflength) CAsyncLog::outputBinary(buf, buflength);
+#define LOG_DEBUG_BIN(buf, buflength) CAsyncLog::outputBinary(buf, buflength)
 
 class CAsyncLog
 {
 public:
   static bool init(const char *pszLogFileName = nullptr, bool b_TruncateLongLine = false, int64_t nRollSize = 10 * 1024 * 1024);
-  static bool uninit();
+  static void uninit();
   static void setLevel(LOG_LEVEL nLevel);
   static bool isRunning();
 
@@ -84,6 +85,7 @@ private:
   static char *formLog(int &index, char *szbuf, size_t size_buf, unsigned char *buffer, size_t size);
   static void writeThreadProc();
   static void GetPIDString(char *szPID, size_t size);
+  static std::string getCurrentTimeString();
 
 private:
   static bool m_bToTile;                               // 日志写入文件还是控制台

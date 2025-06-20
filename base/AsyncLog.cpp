@@ -2,9 +2,12 @@
  *  Filename:   AsyncLog.h
  *  Author:     xiebaoma
  *  Date:       2025-06-18
+ *              2025-06-19
+ *              2025-06-20
  *  Description:一个异步日志类
  */
 
+#include <algorithm>
 #include <ctime>
 #include <time.h>
 #include <sys/timeb.h>
@@ -15,12 +18,12 @@
 #include <stdarg.h>
 #include <cstdio>
 #ifdef _WIN32
+#define NOMINMAX     // 避免 Windows 头文件污染 min/max 某些老旧系统或库（比如 Windows.h）中，有可能定义了 min 宏，会污染命名空间
 #include <windows.h> // GetCurrentProcessId
 #else
 #include <unistd.h> // getpid
 #endif
 
-#include "../base/Platform.h"
 #include "AsyncLog.h"
 
 #define MAX_LINE_LENGTH 256
@@ -62,7 +65,7 @@ bool CAsyncLog::init(const char *pszLogFileName, bool b_TruncateLongLine, int64_
     return true;
 }
 
-bool CAsyncLog::uninit()
+void CAsyncLog::uninit()
 {
     m_bExit = true;
 
@@ -179,16 +182,9 @@ bool CAsyncLog::output(long nLevel, const char *pszFileName, int nLineNo, const 
         {
             if (m_hLogFile == nullptr)
             {
-                // 获取时间
-                char szNow[64];
-                time_t now = time(NULL);
-                tm time;
-#ifdef _WIN32
-                localtime_s(&time, &now);
-#else
-                localtime_r(&now, &time);
-#endif
-                strftime(szNow, sizeof(szNow), "%Y%m%d%H%M%S", &time);
+                // 准备时间
+                std::string szNow;
+                szNow = getCurrentTimeString();
 
                 // 准备文件名
                 std::string strNewFileName(m_strFileName);
@@ -215,7 +211,29 @@ bool CAsyncLog::output(long nLevel, const char *pszFileName, int nLineNo, const 
 
 bool CAsyncLog::outputBinary(unsigned char *buffer, size_t size)
 {
-    return false;
+    std::ostringstream os;
+    static const size_t PRINTSIZE = 512; // 每次读取的最大字节数
+    char szbuf[PRINTSIZE * 3 + 8];       // 一个字符最多三个字节，再加8个字节保险
+    size_t lsize = 0;                    // 已读取的字节数
+    int index = 0;
+
+    // 使用 reinterpret_cast<uintptr_t> 更跨平台，避免 long 在 32/64 位下表现不一致
+    os << "address[" << reinterpret_cast<uintptr_t>(buffer) << "] size[" << size << "] \n";
+
+    while (lsize < size)
+    {
+        size_t lprintbufsize = std::min(size - lsize, PRINTSIZE);
+        formLog(index, szbuf, sizeof(szbuf), buffer + lsize, lprintbufsize);
+        os << szbuf;
+        lsize += lprintbufsize;
+    }
+
+    {
+        std::lock_guard<std::mutex> lock_guard(m_mutexWrite);
+        m_listLinesToWrite.push_back(os.str());
+    }
+    m_cvWrite.notify_one();
+    return true;
 }
 
 void CAsyncLog::makeLinePrefix(long nLevel, std::string &strPrefix)
@@ -279,26 +297,17 @@ bool CAsyncLog::createNewFile(const char *pszLogFileName)
 
 bool CAsyncLog::writeToFile(const std::string &data)
 {
-    std::string strLocal(data);
-    int ret = 0;
-    while (true)
-    {
-        ret = fwrite(strLocal.c_str(), 1, strLocal.length(), m_hLogFile);
-        if (ret <= 0)
-        {
-            return false;
-        }
-        else if (ret < (int)strLocal.length())
-        {
-            strLocal.erase(0, ret);
-        }
+    if (!m_hLogFile)
+        return false;
 
-        if (strLocal.empty())
-        {
-            break;
-        }
+    size_t written = fwrite(data.c_str(), 1, data.size(), m_hLogFile);
+    if (written != data.size())
+    {
+        fprintf(stderr, "writeToFile failed: %s\n", strerror(errno));
+        return false;
     }
-    fflush(m_hLogFile);
+
+    fflush(m_hLogFile); // 或者考虑延迟刷盘优化性能
     return true;
 }
 
@@ -315,8 +324,122 @@ std::string CAsyncLog::ullto4Str(int n)
     return std::string(buf);
 }
 
+/*
+ask GPT, not very understand
+格式化逻辑：
+每 32 字节输出一行，行前加上 ullto4Str(index) 作为“行头编号”，并加空格。
+每 16 字节额外加个空格，便于阅读。
+每个字节按 XX 十六进制格式输出。
+e.g:
+000000  4a5f1e2a7b0c...（32 字节）
+000001  9d0a22ffab34...（32 字节）
+*/
+char *CAsyncLog::formLog(int &index, char *szbuf, size_t size_buf, unsigned char *buffer, size_t size)
+{
+    size_t len = 0;
+    size_t lsize = 0;
+    const char hexchars[] = "0123456789abcdef";
+
+    while (lsize < size && len + 4 < size_buf) // 保留末尾 '\n' 和 '\0'
+    {
+        if (lsize % 32 == 0)
+        {
+            if (lsize != 0 && len + 1 < size_buf)
+                szbuf[len++] = '\n';
+
+            int headlen = snprintf(szbuf + len, size_buf - len, "%s ", ullto4Str(index++));
+            if (headlen <= 0 || static_cast<size_t>(headlen) >= size_buf - len)
+                break; // snprintf 出错或缓冲不足
+            len += headlen;
+        }
+
+        if (lsize % 16 == 0 && len + 1 < size_buf)
+            szbuf[len++] = ' ';
+
+        if (len + 2 < size_buf)
+        {
+            szbuf[len++] = hexchars[(buffer[lsize] >> 4) & 0xF];
+            szbuf[len++] = hexchars[buffer[lsize] & 0xF];
+        }
+        else
+        {
+            break; // 防止越界
+        }
+
+        lsize++;
+    }
+
+    if (len + 2 <= size_buf)
+    {
+        szbuf[len++] = '\n';
+        szbuf[len] = '\0';
+    }
+    else if (len < size_buf)
+    {
+        szbuf[len] = '\0'; // 结尾兜底
+    }
+    return szbuf;
+}
+
 void CAsyncLog::writeThreadProc()
 {
+    m_bRunning = true;
+    while (true)
+    {
+        if (!m_strFileName.empty())
+        {
+            if (m_hLogFile == nullptr || m_CurrentWrittenSize >= m_nFileRollSize)
+            {
+                m_CurrentWrittenSize = 0;
+
+                // 准备时间
+                std::string szNow;
+                szNow = getCurrentTimeString();
+
+                std::string strNewFileName(m_strFileName);
+                strNewFileName += ".";
+                strNewFileName += szNow;
+                strNewFileName += ".";
+                strNewFileName += m_strFileNamePID;
+                strNewFileName += ".log";
+                if (!createNewFile(strNewFileName.c_str()))
+                    return;
+            }
+        }
+
+        std::string strLine;
+
+        /*
+        条件变量 wait() 可能被虚假唤醒（spurious wakeup），也就是说，即使没有 notify_one() 调用，它也可能突然返回。
+        因此，你必须重新检查条件是否满足（即日志队列是否非空）。
+        */
+        {
+            std::unique_lock<std::mutex> guard(m_mutexWrite);
+            while (m_listLinesToWrite.empty())
+            {
+                if (m_bExit)
+                    return;
+                m_cvWrite.wait(guard);
+            }
+            strLine = m_listLinesToWrite.front();
+            m_listLinesToWrite.pop_front();
+        }
+
+        std::cout << strLine << std::endl;
+
+#ifdef _WIN32
+        OutputDebugStringA(strLine.c_str());
+        OutputDebugStringA("\n");
+#endif
+
+        if (!m_strFileName.empty())
+        {
+            if (!writeToFile(strLine))
+                return;
+            m_CurrentWrittenSize += strLine.length();
+        }
+    }
+    m_bRunning = false;
 }
 
 void CAsyncLog::GetPIDString(char *szPID, size_t size)
@@ -326,4 +449,18 @@ void CAsyncLog::GetPIDString(char *szPID, size_t size)
 #else
     snprintf(szPID, size, "%05d", (int)getpid());
 #endif
+}
+
+std::string CAsyncLog::getCurrentTimeString()
+{
+    char szNow[64];
+    time_t now = time(NULL);
+    tm timeinfo;
+#ifdef _WIN32
+    localtime_s(&timeinfo, &now);
+#else
+    localtime_r(&now, &timeinfo);
+#endif
+    strftime(szNow, sizeof(szNow), "%Y%m%d%H%M%S", &timeinfo);
+    return std::string(szNow);
 }

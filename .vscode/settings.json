@@ -62,6 +62,8 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "list": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "fstream": "cpp",
+        "map": "cpp"
     }
 }

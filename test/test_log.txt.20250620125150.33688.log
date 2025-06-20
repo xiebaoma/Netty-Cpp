@@ -1,0 +1,6 @@
+[DEBUG][[2025-06-20 12:51:50:505]][1] [AsyncLogTest.cpp:29]This is a DEBUG message.
+[INFO][[2025-06-20 12:51:50:505]][1] [AsyncLogTest.cpp:30]This is an INFO message.
+[WARNING][[2025-06-20 12:51:50:505]][1] [AsyncLogTest.cpp:31]This is a WARNING message.
+[INFO][[2025-06-20 12:51:50:505]][1] [AsyncLogTest.cpp:40]Logging some variables: value = 42, name = AsyncLogger
+address[697976224272] size[32] 
+p񟂢  000102030405060708090a0b0c0d0e0f 101112131415161718191a1b1c1d1e1f
