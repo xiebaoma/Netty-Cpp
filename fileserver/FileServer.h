@@ -25,7 +25,7 @@ struct StoredUserInfo
     std::string nickname;
 };
 
-class FileServer final主l
+class FileServer final
 {
 public:
     FileServer() = default;
