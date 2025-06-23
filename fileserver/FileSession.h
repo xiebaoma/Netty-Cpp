@@ -12,21 +12,21 @@
 class FileSession : public TcpSession
 {
 public:
-    FileSession(const std::shared_ptr<TcpConnection> &conn, const char *filebasedir);
+    FileSession(const std::shared_ptr<TcpConnection>& conn, const char* filebasedir);
     virtual ~FileSession();
 
-    FileSession(const FileSession &rhs) = delete;
-    FileSession &operator=(const FileSession &rhs) = delete;
+    FileSession(const FileSession& rhs) = delete;
+    FileSession& operator =(const FileSession& rhs) = delete;
 
-    // 有数据可读, 会被多个工作loop调用
-    void onRead(const std::shared_ptr<TcpConnection> &conn, ByteBuffer *pBuffer, Timestamp receivTime);
+    //有数据可读, 会被多个工作loop调用
+    void onRead(const std::shared_ptr<TcpConnection>& conn, ByteBuffer* pBuffer, Timestamp receivTime);
 
 private:
-    // 64位机器上，size_t是8个字节
-    bool process(const std::shared_ptr<TcpConnection> &conn, const char *inbuf, size_t length);
-
-    bool onUploadFileResponse(const std::string &filemd5, int64_t offset, int64_t filesize, const std::string &filedata, const std::shared_ptr<TcpConnection> &conn);
-    bool onDownloadFileResponse(const std::string &filemd5, int32_t clientNetType, const std::shared_ptr<TcpConnection> &conn);
+    //64位机器上，size_t是8个字节
+    bool process(const std::shared_ptr<TcpConnection>& conn, const char* inbuf, size_t length);
+    
+    bool onUploadFileResponse(const std::string& filemd5, int64_t offset, int64_t filesize, const std::string& filedata, const std::shared_ptr<TcpConnection>& conn);
+    bool onDownloadFileResponse(const std::string& filemd5, int32_t clientNetType, const std::shared_ptr<TcpConnection>& conn);
 
     void resetFile();
 
