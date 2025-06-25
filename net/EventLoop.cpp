@@ -234,7 +234,7 @@ void EventLoop::removeChannel(Channel *channel)
         // assert(currentActiveChannel_ == channel || std::find(activeChannels_.begin(), activeChannels_.end(), channel) == activeChannels_.end());
     }
 
-    LOGD("Remove channel, channel = 0x%x, fd = %d", channel, channel->fd());
+    LOG_INFO("Remove channel, channel = 0x%x, fd = %d", channel, channel->fd());
     m_poller->removeChannel(channel);
 }
 
@@ -248,12 +248,6 @@ bool EventLoop::hasChannel(Channel *channel)
 bool EventLoop::createWakeupfd()
 {
 #ifdef WIN32
-    // if (_pipe(fdpipe_, 256, O_BINARY) == -1)
-    //{
-    //     //让程序挂掉
-    //     LOGF("Unable to create pipe, EventLoop: 0x%x", this);
-    //     return false;
-    // }
 
     m_wakeupFdListen = sockets::createOrDie();
     m_wakeupFdSend = sockets::createOrDie();
@@ -273,12 +267,12 @@ bool EventLoop::createWakeupfd()
     if (getsockname(m_wakeupFdListen, (sockaddr *)&serveraddr, &serveraddrlen) < 0)
     {
         // 让程序挂掉
-        LOGF("Unable to bind address info, EventLoop: 0x%x", this);
+        LOG_FATAL("Unable to bind address info, EventLoop: 0x%x", this);
         return false;
     }
 
     int useport = ntohs(serveraddr.sin_port);
-    LOGD("wakeup fd use port: %d", useport);
+    LOG_DEBUG("wakeup fd use port: %d", useport);
 
     // serveraddr.sin_family = AF_INET;
     // serveraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
@@ -286,7 +280,7 @@ bool EventLoop::createWakeupfd()
     if (::connect(m_wakeupFdSend, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0)
     {
         // 让程序挂掉
-        LOGF("Unable to connect to wakeup peer, EventLoop: 0x%x", this);
+        LOG_FATAL("Unable to connect to wakeup peer, EventLoop: 0x%x", this);
         return false;
     }
 
@@ -296,7 +290,7 @@ bool EventLoop::createWakeupfd()
     if (m_wakeupFdRecv < 0)
     {
         // 让程序挂掉
-        LOGF("Unable to accept wakeup peer, EventLoop: 0x%x", this);
+        LOG_FATAL("Unable to accept wakeup peer, EventLoop: 0x%x", this);
         return false;
     }
 
@@ -309,7 +303,7 @@ bool EventLoop::createWakeupfd()
     if (m_wakeupFd < 0)
     {
         // 让程序挂掉
-        LOGF("Unable to create wakeup eventfd, EventLoop: 0x%x", this);
+        LOG_FATAL("Unable to create wakeup eventfd, EventLoop: 0x%x", this);
         return false;
     }
 
@@ -394,8 +388,6 @@ void EventLoop::doOtherTasks()
 
 void EventLoop::printActiveChannels() const
 {
-    // TODO: 改成for-each 语法
-    // std::vector<Channel*>
     for (const auto &iter : m_activeChannels)
     {
         LOGD("{%s}", iter->reventsToString().c_str());
