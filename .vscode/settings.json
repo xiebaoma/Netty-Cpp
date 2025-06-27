@@ -64,6 +64,10 @@
         "list": "cpp",
         "xtree": "cpp",
         "fstream": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "functional": "cpp",
+        "set": "cpp",
+        "unordered_map": "cpp",
+        "xhash": "cpp"
     }
 }

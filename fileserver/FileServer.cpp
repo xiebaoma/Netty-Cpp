@@ -4,6 +4,7 @@
  *  Date:       2025-06-21
  *  Description:文件服务器主服务器类
  */
+
 #include "FileServer.h"
 #include "../net/InetAddress.h"
 #include "../base/AsyncLog.h"
@@ -62,11 +63,10 @@ void FileServer::onDisconnected(const std::shared_ptr<TcpConnection> &conn)
         if (sessionConn == conn)
         {
             LOG_INFO("client disconnected: %s", conn->peerAddress().toIpPort().c_str());
-            m_sessions.erase(iter);  // 安全删除
-            return; // 只处理一个 session，立即退出
+            m_sessions.erase(iter); // 安全删除
+            return;                 // 只处理一个 session，立即退出
         }
     }
 
     LOG_WARN("Disconnected connection not found in sessions list: %s", conn->peerAddress().toIpPort().c_str());
 }
-
