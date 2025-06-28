@@ -33,3 +33,19 @@ offset = 300
 有两个列表，一个是Channel注册列表，一个是给操作系统内核的事件列表，
 
 * SelectPoller.cpp::removeChannel()不会内存泄漏吗？
+
+* 一个高效、线程安全、非阻塞的写操作机制
+用户线程：
+   TcpConnection::send() → 通过 runInLoop → TcpConnection::sendInLoop()
+         ↓
+   若能直接写完 → 写完成回调（可选）
+         ↓
+   若没写完 → 数据进入 m_outputBuffer + 注册 EPOLLOUT 监听
+         ↓
+
+I/O线程（事件触发）：
+   EPOLLOUT触发 → TcpConnection::handleWrite()
+         ↓
+   写 socket → 如果写完 → 关闭写事件 + 写完成回调
+            → 如果还有数据 → 等下次继续写
+            → 如果失败 → handleClose()
