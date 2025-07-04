@@ -126,10 +126,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AsyncLog.h" />
+    <ClInclude Include="ConfigFileReader.h" />
+    <ClInclude Include="CountDownLatch.h" />
     <ClInclude Include="EventLoop.h" />
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="RAIIWrapper.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Timestamp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AsyncLog.cpp" />
+    <ClCompile Include="ConfigFileReader.cpp" />
+    <ClCompile Include="CountDownLatch.cpp" />
     <ClCompile Include="EventLoop.cpp" />
+    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="RAIIWrapper.cpp" />
+    <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="Timestamp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

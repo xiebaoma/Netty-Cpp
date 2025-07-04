@@ -2,8 +2,22 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="EventLoop.h" />
+    <ClInclude Include="Timestamp.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="ConfigFileReader.h" />
+    <ClInclude Include="CountDownLatch.h" />
+    <ClInclude Include="RAIIWrapper.h" />
+    <ClInclude Include="AsyncLog.h" />
+    <ClInclude Include="Platform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EventLoop.cpp" />
+    <ClCompile Include="Timestamp.cpp" />
+    <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="ConfigFileReader.cpp" />
+    <ClCompile Include="CountDownLatch.cpp" />
+    <ClCompile Include="RAIIWrapper.cpp" />
+    <ClCompile Include="AsyncLog.cpp" />
+    <ClCompile Include="Platform.cpp" />
   </ItemGroup>
 </Project>

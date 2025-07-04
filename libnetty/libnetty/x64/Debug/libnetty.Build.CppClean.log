@@ -1,6 +1,13 @@
 c:\users\24025\desktop\myfile\netty-cpp\libnetty\bin\libnetty.pdb
 c:\users\24025\desktop\myfile\netty-cpp\libnetty\bin\libnetty.idb
+c:\users\24025\desktop\myfile\netty-cpp\libnetty\libnetty\x64\debug\timestamp.obj
+c:\users\24025\desktop\myfile\netty-cpp\libnetty\libnetty\x64\debug\singleton.obj
+c:\users\24025\desktop\myfile\netty-cpp\libnetty\libnetty\x64\debug\raiiwrapper.obj
+c:\users\24025\desktop\myfile\netty-cpp\libnetty\libnetty\x64\debug\platform.obj
 c:\users\24025\desktop\myfile\netty-cpp\libnetty\libnetty\x64\debug\eventloop.obj
+c:\users\24025\desktop\myfile\netty-cpp\libnetty\libnetty\x64\debug\countdownlatch.obj
+c:\users\24025\desktop\myfile\netty-cpp\libnetty\libnetty\x64\debug\configfilereader.obj
+c:\users\24025\desktop\myfile\netty-cpp\libnetty\libnetty\x64\debug\asynclog.obj
 c:\users\24025\desktop\myfile\netty-cpp\libnetty\bin\libnetty.lib
 c:\users\24025\desktop\myfile\netty-cpp\libnetty\libnetty\x64\debug\libnetty.tlog\cl.command.1.tlog
 c:\users\24025\desktop\myfile\netty-cpp\libnetty\libnetty\x64\debug\libnetty.tlog\cl.items.tlog
