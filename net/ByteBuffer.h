@@ -26,6 +26,7 @@ namespace net
     /// +-------------------+------------------+------------------+
     /// |                   |                  |                  |
     /// 0      <=      readerIndex   <=   writerIndex    <=     size
+    // vector<char> ========//read=============//write=============
     class ByteBuffer
     {
     public:
